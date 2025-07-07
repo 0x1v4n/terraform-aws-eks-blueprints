@@ -37,7 +37,6 @@ spec:
       port: 80
       targetPort: http
       protocol: TCP
-      nodePort: 30081
   type: NodePort
   selector:
     app.kubernetes.io/name: game-2048
