@@ -48,6 +48,9 @@ spec:
       steps:
         - setWeight: 50
         - pause: { duration: 30 }
+        - analysis:
+            templates:
+            - templateName: check-2048-available
         - setWeight: 100
         - pause: { duration: 10 }
 ---
@@ -65,4 +68,21 @@ spec:
       protocol: TCP
   type: NodePort
   selector:
-    app.kubernetes.io/name: game-2048
+    app.kubernetes.io/name: game-204
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: check-2048-available
+  namespace: game-2048
+spec:
+  metrics:
+  - name: available-pods
+    interval: 10s
+    count: 3
+    successCondition: result >= 1
+    provider:
+      prometheus:
+        address: http://kube-prometheus-stack-prometheus.kube-prometheus-stack:9090
+        query: |
+          sum(kube_pod_status_ready{namespace="game-2048",condition="true"})
