@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: game-2048
-          image: public.ecr.aws/l6m2t8p7/docker-2048:latest
+          image: public.ecr.aws/l6m2t8p7/docker-2048
           ports:
             - name: http
               containerPort: 80
@@ -41,17 +41,6 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 15
             failureThreshold: 3
-          resources:
-            requests:
-              cpu: "50m"
-              memory: "64Mi"
-            limits:
-              cpu: "500m"
-              memory: "256Mi"
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 1000
-            allowPrivilegeEscalation: false
   strategy:
     canary:
       maxUnavailable: 0
