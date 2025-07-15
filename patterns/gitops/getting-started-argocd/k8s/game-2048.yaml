@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: game-2048
-          image: public.ecr.aws/l6m2t8p7/docker-2048:latest
+          image: public.ecr.aws/l6m2t8p7/docker-2048:2023-01-05-16-39-07
           ports:
             - name: http
               containerPort: 80
