@@ -13,6 +13,7 @@ metadata:
 spec:
   replicas: 2
   revisionHistoryLimit: 3
+  progressDeadlineSeconds: 1200
   selector:
     matchLabels:
       app.kubernetes.io/name: game-2048
@@ -52,7 +53,7 @@ spec:
             templates:
             - templateName: check-2048-available
         - setWeight: 100
-        - pause: { duration: 10 }
+        - pause: { duration: 30 }
 ---
 apiVersion: v1
 kind: Service
@@ -80,7 +81,8 @@ spec:
   - name: available-pods
     interval: 10s
     count: 3
-    successCondition: result >= 1
+    successCondition: result >= 2
+    failureCondition: result < 1
     provider:
       prometheus:
         address: http://kube-prometheus-stack-prometheus.kube-prometheus-stack:9090
